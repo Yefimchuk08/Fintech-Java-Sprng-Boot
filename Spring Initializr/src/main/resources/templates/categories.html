@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Categories CRUD</title>
+</head>
+<body>
+
+<h2>Categories</h2>
+
+<form th:action="@{/categories}" th:object="${category}" method="post">
+    <input type="hidden" th:field="*{id}">
+    <input type="text" th:field="*{name}" placeholder="Category name" required>
+    <button type="submit">Save</button>
+</form>
+
+<hr>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Actions</th>
+    </tr>
+    <tr th:each="cat : ${categories}">
+        <td th:text="${cat.id}"></td>
+        <td th:text="${cat.name}"></td>
+        <td>
+            <a th:href="@{/categories/edit/{id}(id=${cat.id})}">Edit</a>
+            <a th:href="@{/categories/delete/{id}(id=${cat.id})}">Delete</a>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>
