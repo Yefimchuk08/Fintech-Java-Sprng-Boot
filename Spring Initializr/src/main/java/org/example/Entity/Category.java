@@ -17,4 +17,8 @@ public class Category {
 
     @Column(nullable = false)
     private String name;
+
+    // Фото через URL (або шлях, який повертає ImageService)
+    @Column(nullable = false)
+    private String imageUrl;
 }
