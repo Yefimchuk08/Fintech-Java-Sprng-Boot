@@ -1,35 +1,69 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Categories CRUD</title>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout/layout :: content">
 
-<h2>Categories</h2>
+<div class="container">
 
-<form th:action="@{/categories}" th:object="${category}" method="post">
-    <input type="hidden" th:field="*{id}">
-    <input type="text" th:field="*{name}" placeholder="Category name" required>
-    <button type="submit">Save</button>
-</form>
+    <h2>Categories</h2>
 
-<hr>
+    <!-- FORM -->
+    <form th:action="@{/categories}" method="post">
+        <input type="hidden" th:field="${category.id}">
 
-<table border="1">
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Actions</th>
-    </tr>
-    <tr th:each="cat : ${categories}">
-        <td th:text="${cat.id}"></td>
-        <td th:text="${cat.name}"></td>
-        <td>
-            <a th:href="@{/categories/edit/{id}(id=${cat.id})}">Edit</a>
-            <a th:href="@{/categories/delete/{id}(id=${cat.id})}">Delete</a>
-        </td>
-    </tr>
-</table>
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text"
+                   class="form-control"
+                   th:field="${category.name}">
+        </div>
 
-</body>
+        <div class="form-group">
+            <label>Image URL</label>
+            <input type="text"
+                   class="form-control"
+                   th:field="${category.imageUrl}">
+        </div>
+
+        <button class="btn btn-success mt-2">
+            Save
+        </button>
+    </form>
+
+    <hr>
+
+    <!-- LIST -->
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Image</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="c : ${categories}">
+            <td th:text="${c.name}"></td>
+
+            <td>
+                <img th:src="${c.imageUrl}" width="80">
+            </td>
+
+            <td>
+                <a class="btn btn-warning btn-sm"
+                   th:href="@{/categories/edit/{id}(id=${c.id})}">
+                    Edit
+                </a>
+
+                <a class="btn btn-danger btn-sm"
+                   th:href="@{/categories/delete/{id}(id=${c.id})}">
+                    Delete
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
 </html>

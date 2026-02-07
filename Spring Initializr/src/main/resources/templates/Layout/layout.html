@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>CRUD Application</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+
+<!-- ===== MENU ===== -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+
+        <a class="navbar-brand" th:href="@{/}">
+            CRUD App
+        </a>
+
+        <div class="navbar-nav">
+
+            <!-- Courses -->
+            <a class="nav-link" th:href="@{/}">
+                Courses
+            </a>
+
+            <a class="nav-link" th:href="@{/add}">
+                Add Course
+            </a>
+
+            <!-- Categories -->
+            <a class="nav-link" th:href="@{/categories}">
+                Categories
+            </a>
+
+            <a class="nav-link" th:href="@{/categories/create}">
+                Create Category
+            </a>
+
+        </div>
+    </div>
+</nav>
+
+<!-- ===== CONTENT ===== -->
+<div class="container mt-4"
+     th:fragment="content">
+
+    <!-- Сюди вставляється index.html / create.html -->
+</div>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout/layout :: content">
+
+<div>
+
+    <h2>Створити категорію</h2>
+
+    <form th:action="@{/categories/create}" method="post">
+
+        <div class="mb-3">
+            <label>Назва</label>
+            <input type="text" name="name" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label>Image URL</label>
+            <input type="text" name="imageUrl" class="form-control">
+        </div>
+
+        <button class="btn btn-success">
+            Зберегти
+        </button>
+
+    </form>
+
+</div>
+
+</html>
