@@ -1,68 +1,46 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      th:replace="layout/layout :: content">
+<html xmlns:th="http://www.thymeleaf.org">
 
-<div class="container">
+<div th:replace="layout/layout :: layout(~{::section})">
 
-    <h2>Categories</h2>
+    <section>
 
-    <!-- FORM -->
-    <form th:action="@{/categories}" method="post">
-        <input type="hidden" th:field="${category.id}">
+        <h2>Categories</h2>
 
-        <div class="form-group">
-            <label>Name</label>
-            <input type="text"
-                   class="form-control"
-                   th:field="${category.name}">
-        </div>
+        <form th:action="@{/categories}" method="post">
+            <input type="hidden" th:field="${category.id}">
 
-        <div class="form-group">
-            <label>Image URL</label>
-            <input type="text"
-                   class="form-control"
-                   th:field="${category.imageUrl}">
-        </div>
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text"
+                       class="form-control"
+                       th:field="${category.name}">
+            </div>
 
-        <button class="btn btn-success mt-2">
-            Save
-        </button>
-    </form>
+            <div class="form-group">
+                <label>Image URL</label>
+                <input type="text"
+                       class="form-control"
+                       th:field="${category.imageUrl}">
+            </div>
 
-    <hr>
+            <button class="btn btn-success mt-2">Save</button>
+        </form>
 
-    <!-- LIST -->
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Image</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
+        <hr>
 
-        <tbody>
-        <tr th:each="c : ${categories}">
-            <td th:text="${c.name}"></td>
+        <table class="table">
+            <tbody>
+            <tr th:each="c : ${categories}">
+                <td th:text="${c.name}"></td>
+                <td>
+                    <img th:src="${c.imageUrl}" width="80">
+                </td>
+            </tr>
+            </tbody>
+        </table>
 
-            <td>
-                <img th:src="${c.imageUrl}" width="80">
-            </td>
-
-            <td>
-                <a class="btn btn-warning btn-sm"
-                   th:href="@{/categories/edit/{id}(id=${c.id})}">
-                    Edit
-                </a>
-
-                <a class="btn btn-danger btn-sm"
-                   th:href="@{/categories/delete/{id}(id=${c.id})}">
-                    Delete
-                </a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    </section>
 
 </div>
 

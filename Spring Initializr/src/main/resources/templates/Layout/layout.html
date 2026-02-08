@@ -24,7 +24,6 @@
 
         <div class="navbar-nav">
 
-            <!-- Courses -->
             <a class="nav-link" th:href="@{/}">
                 Courses
             </a>
@@ -33,13 +32,12 @@
                 Add Course
             </a>
 
-            <!-- Categories -->
             <a class="nav-link" th:href="@{/categories}">
                 Categories
             </a>
 
-            <a class="nav-link" th:href="@{/categories/create}">
-                Create Category
+            <a class="nav-link" th:href="@{/register}">
+                Register
             </a>
 
         </div>
@@ -48,9 +46,10 @@
 
 <!-- ===== CONTENT ===== -->
 <div class="container mt-4"
-     th:fragment="content">
+     th:fragment="layout(content)">
 
-    <!-- Сюди вставляється index.html / create.html -->
+    <div th:replace="${content}"></div>
+
 </div>
 
 </body>
