@@ -1,78 +1,43 @@
-package org.example.crudapp.controller;
-
-import lombok.RequiredArgsConstructor;
-import org.example.crudapp.entity.User;
-import org.example.crudapp.repository.UserRepository;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.UUID;
-
 @Controller
-@RequiredArgsConstructor
 public class AuthController {
 
-    private final UserRepository userRepository;
-
-    // =========================
-    // REGISTER
-    // =========================
-    @GetMapping("/register")
-    public String registerPage() {
-        return "register";
-    }
-
-    // =========================
-    // FORGOT PASSWORD
-    // =========================
-    @GetMapping("/forgot-password")
-    public String forgotPasswordPage() {
-        return "forgot_password";
-    }
-
-    @PostMapping("/forgot-password")
-    public String processForgotPassword(@RequestParam String email) {
-
-        User user = userRepository.findByEmail(email);
-
-        if (user != null) {
-            String token = UUID.randomUUID().toString();
-            user.setResetToken(token);
-            userRepository.save(user);
-
-            // тут буде EmailService.send(...)
-            System.out.println("Reset link: http://localhost:8080/reset-password?token=" + token);
-        }
-
-        return "redirect:/";
-    }
-
-    // =========================
-    // RESET PASSWORD PAGE
-    // =========================
+    // Відкриває сторінку відновлення пароля (GET запит)
+    // Викликається коли користувач переходить по посиланню /reset-password
     @GetMapping("/reset-password")
     public String resetPasswordPage(@RequestParam String token, Model model) {
+
+        // Передаємо token у HTML сторінку,
+        // щоб він відправився назад при зміні пароля
         model.addAttribute("token", token);
-        return "reset_password";
+
+        // Повертаємо thymeleaf шаблон reset-password.html
+        return "reset-password";
     }
 
-    // =========================
-    // RESET PASSWORD SAVE
-    // =========================
+    // Обробка форми зміни пароля (POST запит)
     @PostMapping("/reset-password")
     public String resetPassword(
             @RequestParam String token,
             @RequestParam String password) {
 
+        // Шукаємо користувача по токену відновлення
         User user = userRepository.findByResetToken(token);
 
+        // Якщо користувач знайдений
         if (user != null) {
+
+            // Встановлюємо новий пароль
+            // (у реальному проекті пароль потрібно шифрувати)
             user.setPassword(password);
+
+            // Видаляємо токен, щоб його не можна було використати повторно
             user.setResetToken(null);
+
+            // Зберігаємо зміни в базу даних
             userRepository.save(user);
         }
 
+        // Після успішної зміни пароля перенаправляємо на сторінку входу
         return "redirect:/login";
     }
 }
